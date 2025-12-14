@@ -11,11 +11,11 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'api/lists',
+        redirectTo: 'lists',
         pathMatch: 'full'
     },
     {
         path: '**',
-        redirectTo: 'api/lists',
+        redirectTo: 'lists',
     }
 ];

@@ -2,6 +2,7 @@ import { HttpClient, httpResource } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { LibrosResponse } from '../interfaces/libro.interfaces';
+import { Libro } from '../components/libro/libro';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,13 @@ export class LibroService {
     () => {
       const _id = id();
       return _id ? `${this.dataUrl}/${_id}` : undefined;
-    }
-  );
+    });
+
+  crearLibro(data: Libro) {
+    return this.http.post<LibrosResponse>(this.dataUrl, data);
+  }
+
+  refetchLibros() {
+    this.librosResource.reload();
+  }
 }
