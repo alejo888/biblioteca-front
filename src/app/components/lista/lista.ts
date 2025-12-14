@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { LibroService } from '../../services/libro';
 
 @Component({
   selector: 'app-lista',
@@ -7,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './lista.css',
 })
 export class Lista {
+  libroService = inject(LibroService);
 
+  libros = computed(() => {
+    const response = this.libroService.librosResource.value();
+    return response?.libros || [];
+  });
 }

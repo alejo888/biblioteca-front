@@ -1,1 +1,12 @@
-<p>libro works!</p>
+@if(isLoadingLibro()){
+cargando...
+} @else if (libro()) {
+<div>
+    {{ libro()?.autor }}
+    {{ libro()?.titulo }}
+    {{ libro()?.editorial }}
+    {{ libro()?.categoria }}
+    {{ libro()?.sede }}
+    {{ libro()?.apublicacion }}
+</div>
+}
