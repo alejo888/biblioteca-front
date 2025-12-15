@@ -58,14 +58,14 @@ export class Lista {
 
     this.libroService.crearLibro(this.nuevoLibro).subscribe({
       next: (response: any) => {
-        if (response.ok) {
+        if (response.success === true && response.libro) {
           this.cancelarFormulario();
           this.libroService.refetchLibros();
         }
       },
       error: (error: HttpErrorResponse) => {
-        if (error.error && error.error.message) {
-          this.errorCreacion.set(error.error.message);
+        if (error.error && error.error.msg) {
+          this.errorCreacion.set(error.error.msg);
         } else {
           this.errorCreacion.set('Error al crear el libro. Intente de nuevo.');
         }
@@ -97,7 +97,22 @@ export class Lista {
   }
 
   eliminarLibro(id: string) {
-
+    if (this.eliminando() || !id) return;
+    this.eliminando.set(id);
+    this.libroService.eliminarLibro(id).subscribe({
+      next: (response: any) => {
+        if (response.success === true) {
+          this.router.navigate(['/lists']);
+          this.libroService.refetchLibros();
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        this.eliminando.set(null);
+      },
+      complete: () => {
+        this.eliminando.set(null);
+      }
+    });
   }
 
   formatDate(dateString: string): string {

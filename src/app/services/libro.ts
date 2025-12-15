@@ -33,6 +33,10 @@ export class LibroService {
     return this.http.put<LibrosResponse>(`${this.dataUrl}/${id}`, data);
   }
 
+  eliminarLibro(id: string) {
+    return this.http.delete<LibrosResponse>(`${this.dataUrl}/${id}`);
+  }
+
   refetchLibros() {
     this.librosResource.reload();
   }

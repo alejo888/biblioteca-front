@@ -19,7 +19,7 @@ export class LibroComponent {
 
   editando = signal<boolean>(false);
   guardando = signal<boolean>(false);
-  eliminando = signal<string | null>(null);
+  eliminando = signal<boolean>(false);
   errorEdicion = signal<string | null>(null);
 
   libroEditado = signal<Libro>({
@@ -95,7 +95,22 @@ export class LibroComponent {
   }
 
   eliminarLibro() {
-    // this.eliminando.set(true);
+    if (this.eliminando() || !this.libro()) return;
+    this.eliminando.set(true);
+    this.libroService.eliminarLibro(this.libroId()).subscribe({
+      next: (response: any) => {
+        if (response.success === true) {
+          this.router.navigate(['/lists']);
+          this.libroService.refetchLibros();
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        this.eliminando.set(false);
+      },
+      complete: () => {
+        this.eliminando.set(false);
+      }
+    });
   }
 
   volver() {
