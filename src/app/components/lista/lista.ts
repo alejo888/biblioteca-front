@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { LibroService } from '../../services/libro';
 import { FormsModule } from '@angular/forms';
 import { Libro } from '../../interfaces/libro.interfaces';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-lista',
@@ -28,6 +29,9 @@ export class Lista {
     editorial: '',
     categoria: '',
     sede: '',
+    _id: undefined,
+    createdAt: undefined,
+    updatedAt: undefined,
   };
 
   libros = computed(() => {
@@ -44,11 +48,45 @@ export class Lista {
   });
 
   guardarLibro() {
+    if (this.guardando()) return;
 
+    this.guardando.set(true);
+    this.errorCreacion.set(null);
+
+    this.libroService.crearLibro(this.nuevoLibro).subscribe({
+      next: (response: any) => {
+        if (response.ok) {
+          this.cancelarFormulario();
+          this.libroService.refetchLibros();
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.error && error.error.message) {
+          this.errorCreacion.set(error.error.message);
+        } else {
+          this.errorCreacion.set('Error al crear el libro. Intente de nuevo.');
+        }
+      },
+      complete: () => {
+        this.guardando.set(false);
+      },
+    });
   }
 
   cancelarFormulario() {
-
+    this.mostrarFormulario.set(false);
+    this.errorCreacion.set(null);
+    this.nuevoLibro = {
+      titulo: '',
+      autor: '',
+      apublicacion: '',
+      editorial: '',
+      categoria: '',
+      sede: '',
+      _id: undefined,
+      createdAt: undefined,
+      updatedAt: undefined,
+    };
   }
 
   verDetalle(id: string) {
