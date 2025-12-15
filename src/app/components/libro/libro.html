@@ -142,21 +142,21 @@
                             <div class="space-y-4">
                                 <label class="block">
                                     <span class="text-xs uppercase text-gray-400">Título</span>
-                                    <input name="titulo" required
+                                    <input [(ngModel)]="libroEditado().titulo" name="titulo" required
                                         class="mt-1 w-full rounded-xl bg-gray-800 px-4 py-2.5 text-yellow-300 ring-1 ring-yellow-400/20 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all"
                                         placeholder="Ingresa el título">
                                 </label>
 
                                 <label class="block">
                                     <span class="text-xs uppercase text-gray-400">Autor</span>
-                                    <input name="autor" required
+                                    <input [(ngModel)]="libroEditado().autor" name="autor" required
                                         class="mt-1 w-full rounded-xl bg-gray-800 px-4 py-2.5 text-yellow-300 ring-1 ring-yellow-400/20 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all"
                                         placeholder="Nombre del autor">
                                 </label>
 
                                 <label class="block">
                                     <span class="text-xs uppercase text-gray-400">Año de publicación</span>
-                                    <input name="apublicacion" required
+                                    <input [(ngModel)]="libroEditado().apublicacion" name="apublicacion" required
                                         class="mt-1 w-full rounded-xl bg-gray-800 px-4 py-2.5 text-yellow-300 ring-1 ring-yellow-400/20 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all"
                                         placeholder="YYYY">
                                 </label>
@@ -168,21 +168,21 @@
                             <div class="space-y-4">
                                 <label class="block">
                                     <span class="text-xs uppercase text-gray-400">Editorial</span>
-                                    <input name="editorial" required
+                                    <input [(ngModel)]="libroEditado().editorial" name="editorial" required
                                         class="mt-1 w-full rounded-xl bg-gray-800 px-4 py-2.5 text-yellow-300 ring-1 ring-yellow-400/20 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all"
                                         placeholder="Nombre de la editorial">
                                 </label>
 
                                 <label class="block">
                                     <span class="text-xs uppercase text-gray-400">Categoría</span>
-                                    <input name="categoria" required
+                                    <input [(ngModel)]="libroEditado().categoria" name="categoria" required
                                         class="mt-1 w-full rounded-xl bg-gray-800 px-4 py-2.5 text-yellow-300 ring-1 ring-yellow-400/20 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all"
                                         placeholder="Ej. Novela">
                                 </label>
 
                                 <label class="block">
                                     <span class="text-xs uppercase text-gray-400">Sede</span>
-                                    <input name="sede" required
+                                    <input [(ngModel)]="libroEditado().sede" name="sede" required
                                         class="mt-1 w-full rounded-xl bg-gray-800 px-4 py-2.5 text-yellow-300 ring-1 ring-yellow-400/20 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all"
                                         placeholder="Ej. Atlacomulco">
                                 </label>
@@ -194,7 +194,7 @@
                     <div class="flex flex-wrap gap-3 pt-2">
                         <button type="submit"
                             class="inline-flex items-center gap-2 rounded-xl bg-yellow-500 px-6 py-3 font-semibold text-gray-900 hover:bg-yellow-400 disabled:bg-gray-600 transition-all">
-                            <!-- @if (guardando()) { 🔄 Guardando… } @else { 💾 Guardar cambios } -->
+                            @if (guardando()) { 🔄 Guardando… } @else { 💾 Guardar cambios }
                         </button>
 
                         <button type="button" (click)="cancelarEdicion()"

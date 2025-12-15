@@ -1,14 +1,16 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { LibroService } from '../../services/libro';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Libro } from '../../interfaces/libro.interfaces';
 
 @Component({
   selector: 'app-libro',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './libro.html',
   styleUrl: './libro.css',
 })
-export class Libro {
+export class LibroComponent {
   libroService = inject(LibroService);
   route = inject(ActivatedRoute);
   router = inject(Router);
@@ -18,6 +20,15 @@ export class Libro {
   guardando = signal<boolean>(false);
   eliminando = signal<string | null>(null);
   errorEdicion = signal<string | null>(null);
+
+  libroEditado = signal<Libro>({
+    titulo: '',
+    autor: '',
+    apublicacion: '',
+    editorial: '',
+    categoria: '',
+    sede: '',
+  });
 
   // Obtener libro especifico
   libroResource = this.libroService.libroDetalleResource(() => this.libroId());
@@ -40,15 +51,23 @@ export class Libro {
   }
 
   iniciarEdicion() {
-    // this.editando.set(true);
+    if (this.libro()) {
+      this.libroEditado.set({ ...this.libro()! });
+      this.errorEdicion.set(null); // Limpiar error de edicion
+      this.editando.set(true);
+    }
+  }
+
+  cancelarEdicion() {
+    this.editando.set(false);
+    this.errorEdicion.set(null);
+    if (this.libro()) {
+      this.libroEditado.set({ ...this.libro()! });
+    }
   }
 
   eliminarLibro() {
     // this.eliminando.set(true);
-  }
-
-  cancelarEdicion() {
-    // this.editando.set(false);
   }
 
   volver() {

@@ -7,7 +7,7 @@ export const routes: Routes = [
     },
     {
         path: 'lists/:id',
-        loadComponent: () => import('./components/libro/libro').then(m => m.Libro)
+        loadComponent: () => import('./components/libro/libro').then(m => m.LibroComponent)
     },
     {
         path: '',
