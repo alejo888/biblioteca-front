@@ -3,6 +3,7 @@ import { LibroService } from '../../services/libro';
 import { FormsModule } from '@angular/forms';
 import { Libro } from '../../interfaces/libro.interfaces';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista',
@@ -12,6 +13,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class Lista {
   libroService = inject(LibroService);
+
+  router = inject(Router);
 
   mostrarFormulario = signal<boolean>(false);
 
@@ -90,7 +93,7 @@ export class Lista {
   }
 
   verDetalle(id: string) {
-
+    this.router.navigate(['/lists', id]);
   }
 
   eliminarLibro(id: string) {
