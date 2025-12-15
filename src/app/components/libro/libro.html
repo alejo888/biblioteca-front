@@ -128,7 +128,7 @@
 
                 } @else {
                 <!-- Formulario de edición -->
-                <form class="space-y-6">
+                <form (ngSubmit)="guardarCambios()" #editForm="ngForm" class="space-y-6">
                     <!-- Mensaje de Error de Edición -->
                     @if (errorEdicion()) {
                     <div class="rounded-lg bg-red-900/50 p-4 ring-1 ring-red-500/30">
@@ -192,7 +192,7 @@
 
                     <!-- Botonera -->
                     <div class="flex flex-wrap gap-3 pt-2">
-                        <button type="submit"
+                        <button type="submit" [disabled]="!editForm.form.valid || guardando()"
                             class="inline-flex items-center gap-2 rounded-xl bg-yellow-500 px-6 py-3 font-semibold text-gray-900 hover:bg-yellow-400 disabled:bg-gray-600 transition-all">
                             @if (guardando()) { 🔄 Guardando… } @else { 💾 Guardar cambios }
                         </button>

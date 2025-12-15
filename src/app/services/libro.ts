@@ -29,6 +29,10 @@ export class LibroService {
     return this.http.post<LibrosResponse>(this.dataUrl, data);
   }
 
+  actualizarLibro(id: string, data: Libro) {
+    return this.http.put<LibrosResponse>(`${this.dataUrl}/${id}`, data);
+  }
+
   refetchLibros() {
     this.librosResource.reload();
   }

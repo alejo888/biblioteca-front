@@ -3,6 +3,7 @@ import { LibroService } from '../../services/libro';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Libro } from '../../interfaces/libro.interfaces';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-libro',
@@ -64,6 +65,33 @@ export class LibroComponent {
     if (this.libro()) {
       this.libroEditado.set({ ...this.libro()! });
     }
+  }
+
+  guardarCambios() {
+    if (this.guardando() || !this.libro()) return;
+    this.guardando.set(true);
+    this.errorEdicion.set(null);
+
+    this.libroService.actualizarLibro(this.libroId(), this.libroEditado()).subscribe({
+      next: (response: any) => {
+        if (response.success === true && response.libro) {
+          this.libroResource.reload();
+          this.editando.set(false);
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.error && error.error.msg) {
+          this.errorEdicion.set(error.error.msg);
+        } else {
+          this.errorEdicion.set('Error al actualizar el libro');
+        }
+        this.guardando.set(false);
+      },
+      complete: () => {
+        this.editando.set(false);
+        this.guardando.set(false);
+      }
+    });
   }
 
   eliminarLibro() {
